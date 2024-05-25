@@ -1,0 +1,83 @@
+.customModal {
+    max-width: 1200px !important;
+}
+
+.error-modal {
+    color: red;
+    font-weight: 300;
+    margin-top: 5px;
+}
+
+.close-button {
+    background-color: #f44336;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 9px 20px 8px;
+    border: 1px solid #f44336;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+
+}
+
+.close-button:hover {
+    background-color: white;
+    color: #f44336;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 9px 20px 8px;
+    border: 1px solid #4CAF50;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+
+}
+
+.submit-button:hover {
+    background-color: white;
+    color: #4CAF50;
+}
+
+.x-button {
+    position: absolute;
+    right: 26px;
+    top: 10px;
+    width: 16px;
+    height: 32px;
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.x-button:hover {
+    opacity: 1;
+}
+
+.x-button:before,
+.x-button:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+
+.x-button:before {
+    transform: rotate(45deg);
+}
+
+.x-button:after {
+    transform: rotate(-45deg);
+}
