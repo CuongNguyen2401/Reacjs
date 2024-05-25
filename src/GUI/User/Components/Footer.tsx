@@ -4,6 +4,7 @@ export const Footer = () => {
     return (
         <>
             <footer>
+                <
                 <div className="container">
                     <div className="footer-top">
                         <aside id="footer-top" className="col-sm-12">
