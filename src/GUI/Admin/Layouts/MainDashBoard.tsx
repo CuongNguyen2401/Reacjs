@@ -4,7 +4,8 @@ import { SideBar } from '../Components/SideBar'
 import { Outlet } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { HelmetAdmin } from '../Components/HelmetAdmin';
-import Products from '../Pages/Products';
+
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -29,7 +30,7 @@ export const MainDashBoard = () => {
 
                         </div>
                     </div>
-
+                    <ToastContainer />
                 </div>
                 <script src="/admin-assets/plugins/bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -48,7 +49,8 @@ export const MainDashBoard = () => {
 
                 <script src="/admin-assets/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
                 <script src="/admin-assets/plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js"></script>
-
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+                <script src="/admin-assets/js/jquery.app.js"></script>
                 <script src="/admin-assets/js/custom.min.js"></script>
                 <script src="/admin-assets/js/dashboard1.js"></script>
                 <script src="/admin-assets/plugins/bower_components/toast-master/js/jquery.toast.js"></script>

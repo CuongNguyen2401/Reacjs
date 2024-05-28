@@ -1,53 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef, ModuleRegistry, ClientSideRowModelModule } from 'ag-grid-community';
-import { Product, products } from '../../../BLL/Product';
-import { CustomModal } from '../Components/Modal';
+import { Product } from '../../../BLL/Product';
+import { getProductData, deleteProduct } from '../../../DAL/ProductAPI';
+import { CustomModal } from '../Components/AddProduct';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
-
-
+import FunctionCellRenderer from '../Components/Function';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const Products: React.FC = () => {
-    const [rowData, setRowData] = useState<Product[]>(products);
+    const [rowData, setRowData] = useState<Product[]>([]);
     const [showModal, setShowModal] = useState(false);
 
-    const handleClose = () => setShowModal(false);
-    const handleShow = () => setShowModal(true);
 
+
+    useEffect(() => {
+        async function fetchData() {
+            const data = await getProductData();
+            if (data) {
+                setRowData(data);
+            }
+        }
+        fetchData();
+    }, []);
+
+
+
+    const handleDeleteClick = (id: number) => {
+        deleteProduct(id);
+        console.log(`Deleting product with ID: ${id}`);
+    };
+
+    const handleEdit = () => {
+        // Implement your edit logic here
+
+        console.log("Editing product");
+    };
     const [columnDefs] = useState<ColDef[]>([
         {
-            field: "make",
+            field: "name",
             checkboxSelection: true,
             headerCheckboxSelection: true,
-            editable: true,
             cellEditor: 'agSelectCellEditor',
-            cellEditorParams: {
-                values: ["Tesla", "Ford", "Toyota", "Mercedes", "Fiat", "Nissan", "Vauxhall", "Volvo", "Jaguar"],
-            },
+            headerName: "Name"
         },
-        { field: "model" },
-        { field: "price", filter: 'agNumberColumnFilter' },
-        { field: "electric" },
+        { field: "price", headerName: "Price", filter: 'agNumberColumnFilter' },
+        { field: "description", headerName: "Description" },
+        { field: "imageUrl", headerName: "Image URL" },
+        { field: "categoryId", headerName: "Category ID" },
         {
-            field: "month",
-            comparator: (valueA: string, valueB: string) => {
-                const months = [
-                    'January', 'February', 'March', 'April',
-                    'May', 'June', 'July', 'August',
-                    'September', 'October', 'November', 'December',
-                ];
-                const idxA = months.indexOf(valueA);
-                const idxB = months.indexOf(valueB);
-                return idxA - idxB;
-            },
+            field: "function",
+            headerName: "Actions",
+            cellRenderer: FunctionCellRenderer,
+            cellRendererParams: {
+                onDelete: handleDeleteClick,
+                onEdit: handleEdit,
+            }
         }
+
     ]);
-
-
 
     return (
         <div className='custom'>
@@ -62,11 +76,9 @@ const Products: React.FC = () => {
                     suppressRowClickSelection={true}
                     pagination={true}
                     paginationPageSize={10}
-                    paginationPageSizeSelector={[10, 25, 50]}
                 />
             </div>
         </div>
-
     );
 }
 
