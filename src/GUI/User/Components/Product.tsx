@@ -9,7 +9,9 @@ export const Product = () => {
                         <div className="product-thumb transition">
                             <div className="image">
                                 <a href="indexbb02.html?route=product/product&amp;product_id=42">
+                                    {/* first picture */}
                                     <img className="image_thumb" src="user-assets/image/cache/catalog/demo/product/01-210x210.jpg" title="aliquam quaerat voluptatem" alt="aliquam quaerat voluptatem" />
+                                    {/* second picture */}
                                     <img className="image_thumb_swap" src="user-assets/image/cache/catalog/demo/product/01-02-210x210.jpg" title="aliquam quaerat voluptatem" alt="aliquam quaerat voluptatem" />
                                 </a>
                                 <div className="button-group">
@@ -21,10 +23,10 @@ export const Product = () => {
                                         <i className="fa fa-heart"></i>
                                         <span title="Add to wishlist">Add to wishlist</span>
                                     </button>
-                                    <button className="btn-compare" title="Add to Compare" >
+                                    {/* <button className="btn-compare" title="Add to Compare" >
                                         <i className="fa fa-exchange"></i>
                                         <span title="Add to Compare">Add to Compare</span>
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                             <div className="thumb-description">

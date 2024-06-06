@@ -2,7 +2,7 @@ import React from 'react'
 import { HeaderBottom } from '../Components/HeaderBottom';
 import { LeftAside } from '../Components/LeftAside';
 import { Product } from '../Components/Product';
-import Pagination from '../Components/Pagination';
+
 
 export const HomeUser = () => {
   return (
@@ -73,16 +73,12 @@ export const HomeUser = () => {
                         <div className="owl-wrapper-outer">
                           <div className="owl-wrapper" style={{ width: "2250px", left: "0px", display: "block" }}>
                             <Product />
-                            <Product />
-                            <Product />
-                            <Product />
                           </div>
                         </div>
                         {/* dung der click */}
                         <div className="owl-controls clickable"><div className="owl-buttons"><div className="owl-prev">prev</div><div className="owl-next">next</div></div></div>
-
                         <script type="text/javascript">
-                          <Pagination />
+
                         </script>
 
                       </div>

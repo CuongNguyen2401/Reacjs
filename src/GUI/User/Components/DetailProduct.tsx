@@ -1,5 +1,5 @@
 import React from 'react'
-import Pagination from './Pagination'
+
 
 export const DetailProduct = () => {
     return (
@@ -37,9 +37,7 @@ export const DetailProduct = () => {
                             {/* <!-- Product Image thumbnails END --> */}
                         </div>
                     </div>
-                    <script>
-                        <Pagination />
-                    </script>
+
                     <div className="col-sm-7 product-details col-xs-12 col-md-6">
                         <h1 className="product-name">perspiciatis unde omnis</h1>
 

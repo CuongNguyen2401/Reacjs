@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef, ModuleRegistry, ClientSideRowModelModule } from 'ag-grid-community';
-import { Product } from '../../../BLL/Product';
-import { getProductData, deleteProduct } from '../../../DAL/ProductAPI';
+import { Product } from '../../../Model/Product';
+import { getProductData, deleteProduct } from '../../../api/ProductAPI';
 import { CustomModal } from '../Components/AddProduct';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
@@ -13,20 +12,26 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const Products: React.FC = () => {
     const [rowData, setRowData] = useState<Product[]>([]);
-    const [showModal, setShowModal] = useState(false);
-
-
 
     useEffect(() => {
         async function fetchData() {
-            const data = await getProductData();
-            if (data) {
-                setRowData(data);
+            try {
+                const response = await getProductData();
+                console.log('Fetched data:', response);
+
+                if (response && response.result) {
+                    setRowData(response.result);
+                } else {
+                    console.error('Error fetching product data:', response);
+                    setRowData([]);
+                }
+            } catch (error) {
+                console.error('Error fetching product data:', error);
+                setRowData([]);
             }
         }
         fetchData();
     }, []);
-
 
 
     const handleDeleteClick = (id: number) => {
@@ -35,18 +40,11 @@ const Products: React.FC = () => {
     };
 
     const handleEdit = () => {
-        // Implement your edit logic here
-
         console.log("Editing product");
     };
+
     const [columnDefs] = useState<ColDef[]>([
-        {
-            field: "name",
-            checkboxSelection: true,
-            headerCheckboxSelection: true,
-            cellEditor: 'agSelectCellEditor',
-            headerName: "Name"
-        },
+        { field: "name", checkboxSelection: true, headerCheckboxSelection: true, cellEditor: 'agSelectCellEditor', headerName: "Name" },
         { field: "price", headerName: "Price", filter: 'agNumberColumnFilter' },
         { field: "description", headerName: "Description" },
         { field: "imageUrl", headerName: "Image URL" },
@@ -60,7 +58,6 @@ const Products: React.FC = () => {
                 onEdit: handleEdit,
             }
         }
-
     ]);
 
     return (

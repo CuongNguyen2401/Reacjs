@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import '../css/Modal.css';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addProduct } from '../../../DAL/ProductAPI';
+import { addProduct } from '../../../api/ProductAPI';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,7 +19,7 @@ const productSchema = z.object({
     category: z.string().min(1, 'Category is required'),
     imageUrl: z.string().url('Must be a valid URL'),
     // status: z.string().min(1, 'Status is required'),
-    // rating: z.number().min(1, 'Rating must be at least 1').max(5, 'Rating cannot exceed 5'),
+
 });
 
 type FormFields = z.infer<typeof productSchema>;
@@ -28,7 +28,7 @@ export const CustomModal = () => {
     const notify = () => {
         toast('🦄 Wow so easy!', {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -42,7 +42,6 @@ export const CustomModal = () => {
     );
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
-        // await addProduct(data);
         console.log("data", data)
     };
 

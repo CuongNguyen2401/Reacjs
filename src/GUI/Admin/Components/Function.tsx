@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface FunctionCellRendererProps {
-    productId: number; // Assuming productId is a string, change it accordingly if it's a different type
-    onDelete: (productId: number) => void; // Modify onDelete to accept productId
+    productId: number;
+    onDelete: (productId: number) => void;
     onEdit: () => void;
 }
 
@@ -14,10 +14,10 @@ const FunctionCellRenderer: React.FC<FunctionCellRendererProps> = ({ productId, 
     return (
         <div>
             <span onClick={handleDeleteClick} style={{ cursor: 'pointer' }}>
-                <i className="fa fa-trash"></i> {/* Font Awesome delete icon */}
+                <i className="fa fa-trash"></i>
             </span>
             <span onClick={onEdit} style={{ cursor: 'pointer', marginLeft: '10px' }}>
-                <i className="fa fa-pencil"></i> {/* Font Awesome edit icon */}
+                <i className="fa fa-pencil"></i>
             </span>
         </div>
     );
