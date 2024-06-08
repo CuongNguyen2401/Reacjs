@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import '../css/Modal.css';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { addProduct } from '../../../api/ProductAPI';
+import { addProduct, updateProduct, getProductById } from '../../../api/ProductAPI'; // Update the import to include updateProduct
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Status } from '../../../Model/Enums/Status';
@@ -27,31 +27,21 @@ const productSchema = z.object({
 
 type FormFields = z.infer<typeof productSchema>;
 
-interface CustomModalProps {
+interface EditProductProps {
+    productId: number | null;
     show: boolean;
     onHide: () => void;
-
+    isEdit: boolean;
 }
 
-export const CustomModal: React.FC<CustomModalProps> = () => {
+export const EditProduct: React.FC<EditProductProps> = ({ productId, show, onHide, isEdit }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [categories, setCategories] = useState<CategoryRequest[]>([]);
     const [showModal, setShowModal] = useState(false);
-
-    const notify = (message: string) => {
-        toast(message, {
-
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    };
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormFields>(
+        { mode: 'all', resolver: zodResolver(productSchema) }
+    );
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -69,17 +59,30 @@ export const CustomModal: React.FC<CustomModalProps> = () => {
             }
         };
 
-        fetchCategories();
-    }, []);
+        const fetchProduct = async () => {
+            if (isEdit && productId !== null) {
+                const product = await getProductById(productId);
+                if (product) {
+                    setValue('name', product.name);
+                    setValue('price', product.price);
+                    setValue('salePrice', product.salePrice);
+                    setValue('description', product.description);
+                    setValue('categoryId', product.categoryId);
+                    setValue('quantity', product.quantity);
+                    setValue('productStatus', product.productStatus);
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormFields>(
-        { mode: 'all', resolver: zodResolver(productSchema) }
-    );
+                }
+            }
+        };
+
+        fetchCategories();
+        fetchProduct();
+    }, [isEdit, productId, setValue]);
+
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
-        const id = data.id || 0;
         const product = {
-            id,
+            id: productId,
             name: data.name,
             price: data.price,
             salePrice: data.salePrice,
@@ -89,49 +92,49 @@ export const CustomModal: React.FC<CustomModalProps> = () => {
             productStatus: data.productStatus
         };
 
-        if (!selectedFile) {
+        if (!selectedFile && !isEdit) {
             toast.error('No file selected!');
             return;
         }
 
         const formdata = new FormData();
         formdata.append('product', JSON.stringify(product));
-        formdata.append('file', selectedFile);
+        if (selectedFile) {
+            formdata.append('file', selectedFile);
+        }
         setIsLoading(true);
 
         try {
-            await addProduct(formdata);
-            toast.success('Product added successfully!');
+            if (isEdit) {
+                await updateProduct(formdata);
+                toast.success('Product updated successfully!');
+            } else {
+                console.log('Adding product:', product);
+                toast.success('Product added successfully!');
+            }
 
             handleClose();
             setSelectedFile(null);
             reset();
         } catch (error) {
-            toast.error('Failed to add product.');
-            console.error("Error adding product:", error);
+            toast.error(`Failed to ${isEdit ? 'update' : 'add'} product.`);
+            console.error(`Error ${isEdit ? 'updating' : 'adding'} product:`, error);
         }
 
         setIsLoading(false);
     };
 
-    const handleShow = () => {
-        setShowModal(true);
-    };
-
+    const handleShow = () => setShowModal(true);
     const handleClose = () => {
-        if (setShowModal) {
-            setShowModal(false);
-        }
+        setShowModal(false);
+        onHide();
     };
 
     return (
         <>
-            <Button variant="primary btn-lg" onClick={handleShow}>
-                Add Product
-            </Button>
-            <Modal dialogClassName='customModal' show={showModal} onHide={handleClose}>
+            <Modal dialogClassName='customModal' show={show} onHide={handleClose}>
                 <Modal.Header>
-                    <h1>Add Product</h1>
+                    <h1>{isEdit ? 'Edit Product' : 'Add Product'}</h1>
                     <span className='x-button' onClick={handleClose}></span>
                 </Modal.Header>
                 <Modal.Body>
@@ -200,10 +203,10 @@ export const CustomModal: React.FC<CustomModalProps> = () => {
                                 })}
                             >
                                 <option value=''>Select category</option>
+
                                 {categories.map((category) => (
                                     <option key={category.id} value={category.id}>{category.name}</option>
                                 ))}
-                                {/* Add more options as needed */}
                             </select>
                             {errors.categoryId && <div className='error-modal'>{errors.categoryId.message}</div>}
                         </div>
@@ -226,37 +229,17 @@ export const CustomModal: React.FC<CustomModalProps> = () => {
                                 setSelectedFile={setSelectedFile}
                             />
                         </div>
-                        <button className="submit-button" type="submit">
-                            Submit
+                        <button className="submit-button">
+                            {isLoading ? (
+                                <ReactLoading type='spin' color='#fff' height={20} width={20} />
+                            ) : (
+                                'Submit'
+                            )}
                         </button>
-
                     </form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <button className="close-button" onClick={handleClose}>
-                        Close
-                    </button>
-                </Modal.Footer>
-                {isLoading && (
-                    <div style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 10
-                    }}>
-                        <ReactLoading type="spin" color="#ffebcd" height={'10%'} width={'10%'} />
-                        <h2 style={{ color: '#ffebcd', marginTop: '10px' }}>Please Wait...</h2>
-                    </div>
-                )}
-
             </Modal>
+
         </>
-    )
-}
+    );
+};

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './UserSlice';
+import userReducer from './slices/UserSlice';
 import authReducer from './slices/AuthSlice';
 
 export const store = configureStore({
@@ -7,7 +7,6 @@ export const store = configureStore({
         user: userReducer,
         auth: authReducer,
     },
-
 });
 
 export type RootState = ReturnType<typeof store.getState>;

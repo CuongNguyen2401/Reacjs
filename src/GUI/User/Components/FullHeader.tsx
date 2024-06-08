@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store/Store';
 
 export const FullHeader = () => {
+
+    const storedAuth = JSON.parse(localStorage.getItem('user') || '{}');
+    const username = storedAuth?.username;
+
+
+
     return (
         <div className="full-header">
             <div className="container">
@@ -28,15 +36,14 @@ export const FullHeader = () => {
                     <aside id="header-right">
                         <div className="html-content">
                             <div className="box-content">
-                                <div id="ttcmsheaderservices" className="col-xs-12 col-sm-6 col-lg-2">
+                                <div id="ttcmsheaderservices" className="col-xs-12 col-sm-6 col-lg-2 ">
                                     <div className="ttcmsheaderservice col-xs-12 col-sm-12">
                                         <div className="ttsupport">
                                             <div className="ttcontent_inner">
                                                 <div className="service">
-                                                    <div className="ttsupport_img service-icon"></div>
-                                                    <div className="service-content">
-                                                        <div className="service-title">Call center</div>
-                                                        <div className="service-desc">088-888-8888</div>
+                                                    <div className="service-content" style={{ paddingTop: '5px' }}>
+                                                        <i className="fa fa-user fa-2x" aria-hidden="true" style={{ color: 'white' }}></i>
+                                                        <div className="service-title" style={{ display: 'inline-block', paddingLeft: '10px' }}>{username ? username : "Hello, User"}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -50,7 +57,7 @@ export const FullHeader = () => {
                 <div className="col-sm-7 header-middle">
                     <div id="header-search" className="input-group">
                         <input type="text" name="search" value="" placeholder="Search" className="form-control input-lg"></input>
-                        <div className="select-wrapper"><select name="category_id" className="form-control innner-search">
+                        {/* <div className="select-wrapper"><select name="category_id" className="form-control innner-search">
                             <option value="0">Categories</option>
                             <option value="20">soft toy</option>
 
@@ -139,7 +146,7 @@ export const FullHeader = () => {
 
                             <option value="126">Mug</option>
 
-                        </select></div>
+                        </select></div> */}
                         <span className="input-group-btn">
                             <button type="button" className="btn btn-default btn-lg header-search-btn"><i className="fa fa-search"></i>
                                 Search
@@ -147,36 +154,7 @@ export const FullHeader = () => {
                         </span>
                     </div>
 
-                    <script type="text/javascript">
-                        {/* $('#header-search button.header-search-btn').bind('click', function () {
-							url = 'index64b3.html?route=product/search';
 
-							var search = $('#header-search input[name=\'search\']').prop('value');
-
-							if (search) {
-								url += '&search=' + encodeURIComponent(search);
-							}
-
-							var category_id = $('#header-search select[name=\'category_id\']').prop('value');
-
-							if (category_id > 0) {
-								url += '&category_id=' + encodeURIComponent(category_id);
-							}
-
-							url += '&sub_category=true';
-							url += '&description=true';
-
-							//alert (url);
-							location = url;
-						});
-
-						$('#header-search input[name=\'search\']').bind('keydown', function (e) {
-							if (e.keyCode == 13) {
-								$('#header-search button.header-search-btn').trigger('click');
-							}
-						}); */}
-
-                    </script>
                 </div>
             </div>
         </div>

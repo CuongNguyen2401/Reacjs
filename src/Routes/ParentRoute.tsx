@@ -1,20 +1,26 @@
 import {
     createBrowserRouter,
     RouterProvider,
+    useParams,
 } from "react-router-dom";
-import Products from "../GUI/Admin/Pages/Products";
+import Products from "../GUI/Admin/Pages/ProductsManage";
 import { MainDashBoard } from './../GUI/Admin/Layouts/MainDashBoard';
 import { UserLayout } from './../GUI/User/Layouts/UserLayout';
-import { Category } from "../GUI/User/Pages/Category";
-import { HomeUser } from "../GUI/User/Pages/HomeUser";
-import { Detail } from "../GUI/User/Pages/Detail";
+import { Category } from "../GUI/User/Pages/CategoryPage";
+import { HomeUser } from "../GUI/User/Pages/HomeUserPage";
+import { Detail } from "../GUI/User/Pages/DetailPage";
 import { ErrorPage } from "../GUI/User/Components/ErrorPage";
+import { Login } from "../GUI/User/Components/Login";
+import { SignUp } from "../GUI/User/Components/SignUp";
 
-// Define your routes
+
+
+
 const ParentRouter = createBrowserRouter([
     {
         path: "admin",
         element: <MainDashBoard />,
+
         children: [
             {
                 path: "",
@@ -53,6 +59,15 @@ const ParentRouter = createBrowserRouter([
             },
         ],
     },
+    {
+        path: "/login",
+        element: <Login />,
+    },
+    {
+        path: "register",
+        element: <SignUp />
+    },
+
 ]);
 
 export const ParentRoute = () => {

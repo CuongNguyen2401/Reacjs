@@ -1,0 +1,20 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.custom-font {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.ag-theme-quartz {
+    --ag-header-column-resize-handle-height: 25%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.ag-header-cell-text {
+    font-weight: 700;
+}

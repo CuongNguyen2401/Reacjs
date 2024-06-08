@@ -1,6 +1,7 @@
 
 import axios from 'axios';
-// import { useAuth } from '../context/AuthContext';
+import AuthSlice, { refreshAuthToken } from '../store/slices/AuthSlice';
+import { store } from '../store/Store';
 
 const privateApi = axios.create({
     baseURL: process.env.REACT_APP_API_ENDPOINT,
@@ -20,16 +21,14 @@ privateApi.interceptors.request.use(
 privateApi.interceptors.response.use(
     (response) => response,
     async (error) => {
-        const { response } = error;
         const originalRequest = error.config;
 
-        if (response.status === 401 && !originalRequest._retry) {
+        if (error.response && error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-            // const auth = useAuth();
-            // await auth.refreshToken();
+            await store.dispatch(refreshAuthToken());
             const token = localStorage.getItem('token');
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-            return privateApi(originalRequest);
+            return privateApi.request(originalRequest);
         }
         return Promise.reject(error);
     }

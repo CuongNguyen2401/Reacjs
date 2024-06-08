@@ -1,7 +1,7 @@
 import React from 'react'
 import { HeaderBottom } from '../Components/HeaderBottom';
 import { LeftAside } from '../Components/LeftAside';
-import { Product } from '../Components/Product';
+import { Products } from '../Components/Product';
 
 
 export const HomeUser = () => {
@@ -72,7 +72,7 @@ export const HomeUser = () => {
                       <div className="products-carousel owl-carousel owl-theme" style={{ opacity: 1, display: "block" }}>
                         <div className="owl-wrapper-outer">
                           <div className="owl-wrapper" style={{ width: "2250px", left: "0px", display: "block" }}>
-                            <Product />
+                            <Products />
                           </div>
                         </div>
                         {/* dung der click */}

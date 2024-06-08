@@ -5,16 +5,21 @@ import Header from '../Components/Header'
 import { Footer } from '../Components/Footer'
 import { HelmetProvider } from 'react-helmet-async';
 import { HelmetUser } from '../Components/HelmetUser';
+import { ToastContainer } from 'react-bootstrap';
 export const UserLayout = () => {
   return (
     <>
       <HelmetProvider>
         <HelmetUser />
       </HelmetProvider>
-      <Header />
+      <div>
+        <Header />
+        <Outlet />
+        <Footer />
+        {/* <ToastContainer /> */}
+      </div>
 
-      <Outlet />
-      <Footer />
+
       <script src="/user-assets/catalog/view/javascript/jquery/jquery-2.1.1.min.js"
         type="text/javascript"></script>
       <script src="/user-assets/catalog/view/javascript/TemplateTrip/addonScript.js"

@@ -14,7 +14,7 @@ interface BackendError {
 
 export const createNewUser = async (user: UserRequest): Promise<ApiResponse<User>> => {
     try {
-        const response = await privateApi.post<ApiResponse<User>>('/api/v1/users', user);
+        const response = await publicApi.post<ApiResponse<User>>('/api/v1/users', user);
 
         return response.data;
 
@@ -49,6 +49,22 @@ export const authenticate = async (username: string, password: string): Promise<
     }
 }
 
+export const refreshAuthTokenApi = async (refreshToken: string): Promise<ApiResponse<Token>> => {
+    try {
+        const response = await privateApi.post<ApiResponse<Token>>('/api/v1/auth/refresh', { refreshToken });
+        return response.data;
+    } catch (error) {
+        const axiosError = error as AxiosError<BackendError>;
+        if (axiosError.response && axiosError.response.data) {
+            const backendError = axiosError.response.data;
+            console.error(`Error Code: ${backendError.code}, Message: ${backendError.message}`);
+            throw new Error(backendError.message);
+        } else {
+            console.error('An unexpected error occurred:', error);
+            throw new Error('An unexpected error occurred, please try again later.');
+        }
+    }
+}
 
 export const fetchUserInfo = async (accessToken: string) => {
 

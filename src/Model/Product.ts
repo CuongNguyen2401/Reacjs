@@ -1,12 +1,19 @@
-import { ProductStatus } from "./Enums/ProductStatus";
+// models/Product.ts
+import { z } from 'zod';
+import { Status } from './Enums/Status';
 
-export interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    salePrice: number;
-    quantity: number;
-    categoryId: number;
-    productStatus: ProductStatus;
-}
+const ProductStatusSchema = z.nativeEnum(Status);
+
+export const ProductSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    description: z.string(),
+    price: z.number().nonnegative(),
+    salePrice: z.number().nonnegative(),
+    quantity: z.number().int().nonnegative(),
+    categoryId: z.number().int(),
+    image: z.string().url(),
+    productStatus: ProductStatusSchema
+});
+
+export type Product = z.infer<typeof ProductSchema>;

@@ -1,6 +1,8 @@
 import React from 'react'
 
 export const SideBar = () => {
+    const storedAuth = JSON.parse(localStorage.getItem('user') || '{}');
+    const username = storedAuth?.username;
     return (
 
         <div className="sidebar" role="navigation">
@@ -9,7 +11,7 @@ export const SideBar = () => {
                     <div className="dropdown user-pro-body">
                         <div><img src="/admin-assets/plugins/images/users/varun.jpg" alt="user-img" className="img-circle"></img></div> <a
                             href="#" className="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button"
-                            aria-haspopup="true" aria-expanded="false">Steave Gection <span className="caret"></span></a>
+                            aria-haspopup="true" aria-expanded="false">{username} <span className="caret"></span></a>
                         <ul className="dropdown-menu animated flipInY">
                             <li><a href="#"><i className="ti-user"></i> My Profile</a></li>
                             <li><a href="#"><i className="ti-wallet"></i> My Balance</a></li>
@@ -27,13 +29,13 @@ export const SideBar = () => {
                             {/* <span className="label label-rouded label-inverse pull-right">4</span> */}
                         </span></a>
                         <ul className="nav-second-level">
-                            <li> <a href="index.html">Products</a> </li>
+                            <li> <a href="/admin/products">Products</a> </li>
                             {/* <li> <a href="index2.html">Demographical</a> </li>
                             <li> <a href="index3.html">Analitical</a> </li>
                             <li> <a href="index4.html">Simpler</a> </li> */}
                         </ul>
                     </li>
-                    <li> <a href=" ;" className="waves-effect"><i
+                    {/* <li> <a href=" ;" className="waves-effect"><i
                         className="linea-icon linea-basic fa-fw text-danger" data-icon="7"></i> <span
                             className="hide-menu text-danger"> Multipurpose <span className="fa arrow"></span> <span
                                 className="label label-rouded label-danger pull-right">HOT</span></span></a>
@@ -287,9 +289,10 @@ export const SideBar = () => {
                     <li><a href="gallery.html"><i className="fa fa-circle-o text-info"></i> <span
                         className="hide-menu">Gallery</span></a></li>
                     <li><a href="faq.html"><i className="fa fa-circle-o text-success"></i> <span
-                        className="hide-menu">Faqs</span></a></li>
+                        className="hide-menu">Faqs</span></a></li>*/}
                 </ul>
             </div>
+            <script src=""></script>
         </div>
 
     )

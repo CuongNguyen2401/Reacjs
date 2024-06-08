@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Product } from '../../../Model/Product';
 
 
 export const DetailProduct = () => {
+    const [product, setProduct] = useState<Product>({} as Product);
+
+
     return (
         <>
             <div className="row">
@@ -15,7 +19,7 @@ export const DetailProduct = () => {
                                 </a>
                             </div>
 
-                            <div className="additional-images-container">
+                            {/* <div className="additional-images-container">
                                 <div className="additional-images owl-carousel owl-theme" style={{ opacity: 1, display: "block" }}>
                                     <div className="owl-wrapper-outer"><div className="owl-wrapper" style={{ width: '1100px', left: '0px', display: 'block' }}><div className="owl-item" style={{ width: "110px" }}><div className="image-additional">
                                         <img src="user-assets/image/cache/catalog/demo/product/09-02-300x300.jpg" title="perspiciatis unde omnis" data-image="https://opencart.templatetrip.com/OPC02/OPC040/OPC15/assets/image/cache/catalog/demo/product/09-02-800x800.jpg" data-zoom-image="https://opencart.templatetrip.com/OPC02/OPC040/OPC15/assets/image/cache/catalog/demo/product/09-02-800x800.jpg" alt="perspiciatis unde omnis"></img>
@@ -33,7 +37,7 @@ export const DetailProduct = () => {
 
 
                                     <div className="owl-controls clickable"><div className="owl-buttons"><div className="owl-prev">prev</div><div className="owl-next">next</div></div></div></div>
-                            </div>
+                            </div> */}
                             {/* <!-- Product Image thumbnails END --> */}
                         </div>
                     </div>
